@@ -1,0 +1,7 @@
+{
+  "name": "esm-default-named",
+  "type": "module",
+  "dependencies": {
+    "mathjs": "^14.4.0"
+  }
+}
