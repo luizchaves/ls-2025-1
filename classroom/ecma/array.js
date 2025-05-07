@@ -59,3 +59,59 @@ console.log(values.sort()); //=> [1, 10, 5]
 console.log(values.sort((a, b) => a - b)); //=> [1, 5, 10]
 // 1 - 10 => -9
 // 10 - 5 => 5
+
+// functional programming
+const array = [1, 2, 3, 4, 5];
+
+array.map((value) => value * 2); //=> [2, 4, 6, 8, 10]
+
+array.filter((value) => value % 2 === 0); //=> [2, 4]
+
+array.map((value) => value * 3).filter((value) => value % 2 === 0); //=> [6, 12]
+
+const isEven = (value) => value % 2 === 0;
+const triple = array.map((value) => value * 3);
+const even = triple.filter(isEven);
+
+let sum = 0;
+for (const value of array) {
+  sum += value;
+}
+console.log(sum); //=> 15
+
+// forEach
+sum = 0;
+array.forEach((value, index) => {
+  sum += value;
+});
+console.log(sum); //=> 15
+
+// reduce
+array.reduce((accumulator, value) => accumulator + value, 0); //=> 15
+// accumulator | value | (a, v) => a + v
+// 0           | 1     | 1
+// 1           | 2     | 3
+// 3           | 3     | 6
+// 6           | 4     | 10
+// 10          | 5     | 15
+// 0 + 1 + 2 + 3 + 4 + 5 = 15
+
+array.reduce((accumulator, value) => accumulator * value); //=> 120
+// accumulator | value | (a, v) => a * v
+// 1           | 2     | 2
+// 2           | 3     | 6
+// 6           | 4     | 24
+// 24          | 5     | 120
+// 1 * 2 * 3 * 4 * 5 = 120
+
+// every
+array.every(isEven); //=> false
+
+// some
+array.some(isEven); //=> true
+
+// find
+array.find(isEven); //=> 2
+
+// findIndex
+array.findIndex(isEven); //=> 1
