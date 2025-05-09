@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minha Carteira de Investimentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-3xl font-bold text-gray-800 mb-8">
+        Meus Investimentos em Renda Fixa
+      </h1>
+      <div
+        id="investments-container"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <!-- Cards will be dynamically inserted here -->
+      </div>
+    </div>
+    <script type="module">
+      import { investments } from './js/data.js';
+
+      // 1000 => R$ 1.000,00
+      function formatCurrency(value) {
+        return value.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        });
+      }
+
+      function createCard(investment) {
+        return `
+              <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                  <h2 class="text-xl font-semibold text-gray-800 mb-2">
+                    ${investment.name}
+                  </h2>
+                  <div class="text-gray-600 mb-4">${investment.type}</div>
+                  <div class="text-gray-600 mb-4">
+                    ${investment.return}
+                  </div>
+                  <div class="text-xl font-bold text-gray-800">
+                    ${formatCurrency(investment.value / 100)}
+                  </div>
+              </div>
+          `;
+      }
+
+      const container = document.getElementById('investments-container');
+
+      container.innerHTML = investments.map(createCard).join('');
+    </script>
+  </body>
+</html>
