@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      function showAlert() {
+        alert('Oi');
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Exemplo de onclick</h1>
+    <button>Oi</button>
+    <script>
+      const button = document.querySelector('button');
+      button.addEventListener('click', (event) => {
+        showAlert();
+      });
+    </script>
+  </body>
+</html>

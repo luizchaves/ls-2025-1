@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        <h1 class="text-2xl font-bold text-center mb-6 text-gray-800">Simple Calculator</h1>
+        <div class="space-y-4">
+            <div>
+                <label for="number1" class="block text-sm font-medium text-gray-700">First Number</label>
+                <input type="number" id="number1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <div>
+                <label for="number2" class="block text-sm font-medium text-gray-700">Second Number</label>
+                <input type="number" id="number2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:border-blue-500 focus:ring-blue-500">
+            </div>
+            <button onclick="sum()" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors">
+                Sum
+            </button>
+            <div>
+                <label for="result" class="block text-sm font-medium text-gray-700">Result</label>
+                <input type="number" id="result" readonly class="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm p-2 border" placeholder="Result will appear here">
+            </div>
+        </div>
+    </div>
+
+    <script>
+      function sum() {
+        const number1 = parseFloat(document.getElementById('number1').value) || 0;
+        const number2 = parseFloat(document.getElementById('number2').value) || 0;
+        const result = number1 + number2;
+        document.getElementById('result').value = result;
+      }
+    </script>
+</body>
+</html>
