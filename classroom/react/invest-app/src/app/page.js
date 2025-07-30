@@ -1,7 +1,7 @@
 'use client';
 import InvestmentCard from '@/components/InvestmentCard';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
-import { use, useState } from 'react';
+import { useState } from 'react';
 
 const data = [
   {
