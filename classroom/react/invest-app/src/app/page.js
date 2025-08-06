@@ -1,40 +1,13 @@
 'use client';
 import InvestmentCard from '@/components/InvestmentCard';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
-import { useState } from 'react';
-
-const data = [
-  {
-    id: 'b9f2414d-b8dd-484d-8179-83383d10a3fd',
-    name: 'Tesouro Selic 2029',
-    value: 10050,
-    origin: 'Tesouro Nacional',
-    category: 'Pós',
-    created_at: '2023-08-22T00:00:00-03:00',
-    interest: '100% Selic',
-  },
-  {
-    id: 'a1e2c3d4-e5f6-7890-abcd-1234567890ef',
-    name: 'CDB Banco X 2027',
-    value: 25000,
-    origin: 'Banco X',
-    category: 'Prefixado',
-    created_at: '2022-11-15T00:00:00-03:00',
-    interest: '12% a.a.',
-  },
-  {
-    id: 'f7e6d5c4-b3a2-1098-7654-3210fedcba98',
-    name: 'LCI Banco A 2026',
-    value: 18000,
-    origin: 'Banco A',
-    category: 'Pós',
-    created_at: '2024-01-10T00:00:00-03:00',
-    interest: '98% CDI',
-  },
-];
+import { useState, useEffect } from 'react';
+import API from '@/storage/storage-fetch';
+// import API from '@/storage/storage-axios';
+// import API from '@/storage/storage-supabase-client';
 
 export default function Home() {
-  const [investments, setInvestments] = useState(data);
+  const [investments, setInvestments] = useState([]);
   const [isShowValues, setIsShowValues] = useState(true);
 
   const handleToggleValues = () => {
@@ -43,6 +16,15 @@ export default function Home() {
 
     console.log('Toggle Values');
   };
+
+  const fetchInvestments = async () => {
+    const investments = await API.read('investments');
+    setInvestments(investments);
+  }
+
+  useEffect(() => {
+    fetchInvestments();
+  }, []);
 
   return (
     <>
