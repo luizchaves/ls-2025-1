@@ -1,9 +1,11 @@
 'use client';
 
+import { useInvestment } from '@/contexts/InvestmentContext';
 import { formatCurrency, formatDate } from '@/lib/format';
 import { IconTrash } from '@tabler/icons-react';
 
-export default function InvestmentCard({ investment, setInvestments, isShowValues }) {
+export default function InvestmentCard({ investment }) {
+  const { setInvestments, isShowValues } = useInvestment();
   const handleDeleteInvestment = () => {
     if (confirm(`Deleting investment: ${investment.name}. Are you sure?`)) {
       setInvestments((prevInvestments) =>

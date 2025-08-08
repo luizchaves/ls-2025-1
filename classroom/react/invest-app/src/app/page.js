@@ -3,24 +3,17 @@ import InvestmentCard from '@/components/InvestmentCard';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
 import { useState, useEffect } from 'react';
 import API from '@/storage/storage-fetch';
+import { useInvestment } from '@/contexts/InvestmentContext';
 // import API from '@/storage/storage-axios';
 // import API from '@/storage/storage-supabase-client';
 
 export default function Home() {
-  const [investments, setInvestments] = useState([]);
-  const [isShowValues, setIsShowValues] = useState(true);
-
-  const handleToggleValues = () => {
-    // isShowValues = !isShowValues;
-    setIsShowValues(!isShowValues);
-
-    console.log('Toggle Values');
-  };
+  const { investments, setInvestments, isShowValues, handleToggleValues } = useInvestment();
 
   const fetchInvestments = async () => {
     const investments = await API.read('investments');
     setInvestments(investments);
-  }
+  };
 
   useEffect(() => {
     fetchInvestments();
@@ -43,8 +36,6 @@ export default function Home() {
           <InvestmentCard
             key={investment.id}
             investment={investment}
-            isShowValues={isShowValues}
-            setInvestments={setInvestments}
           />
         ))}
       </div>
