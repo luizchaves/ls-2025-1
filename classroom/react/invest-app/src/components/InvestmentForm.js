@@ -37,16 +37,16 @@ export default function InvestmentForm() {
             onClick={() => toggleShowInvestmentForm()}
           ></div>
           <div
-            className="fixed bottom-0 right-0 top-0 z-[1045] flex w-96 max-w-full flex-col border-none bg-white bg-clip-padding text-neutral-700 shadow-sm outline-none transition duration-300 ease-in-out dark:bg-neutral-800 dark:text-neutral-200 [&[data-te-offcanvas-show]]:transform-none"
+            className="fixed bottom-0 right-0 top-0 z-[1045] flex w-96 max-w-full flex-col border-none bg-white bg-clip-padding text-neutral-700 shadow-sm outline-none transition duration-300 ease-in-out"
             tabIndex={-1}
           >
-            <div className="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
-              <h3 className="font-bold text-gray-800 dark:text-white">
+            <div className="flex justify-between items-center py-3 px-4 border-b border-gray-200">
+              <h3 className="font-bold text-gray-800">
                 Investimento
               </h3>
               <button
                 type="button"
-                className="investment-drawer-close inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded-md text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white text-sm dark:text-gray-500 dark:hover:text-gray-400 dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800"
+                className="investment-drawer-close inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded-md text-gray-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white text-sm"
                 onClick={() => toggleShowInvestmentForm()}
               >
                 <span className="sr-only">Cadastro de Investimento</span>
@@ -71,7 +71,7 @@ export default function InvestmentForm() {
                 <div className="mb-3">
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium mb-2 dark:text-white"
+                    className="block text-sm font-medium mb-2 text-gray-700"
                   >
                     Nome
                   </label>
@@ -81,7 +81,7 @@ export default function InvestmentForm() {
                     name="name"
                     onChange={handleChange}
                     value={investmentFormData.name}
-                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                     placeholder="Ex: Tesouro Selic 2030"
                     required
                   />
@@ -89,7 +89,7 @@ export default function InvestmentForm() {
                 <div className="mb-3">
                   <label
                     htmlFor="value"
-                    className="block text-sm font-medium mb-2 dark:text-white"
+                    className="block text-sm font-medium mb-2 text-gray-700"
                   >
                     Valor
                   </label>
@@ -100,7 +100,7 @@ export default function InvestmentForm() {
                     step={0.01}
                     onChange={handleChange}
                     value={investmentFormData.value}
-                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                     placeholder="Ex: 1000.00"
                     required
                   />
@@ -108,7 +108,7 @@ export default function InvestmentForm() {
                 <div className="mb-3">
                   <label
                     htmlFor="origin"
-                    className="block text-sm font-medium mb-2 dark:text-white"
+                    className="block text-sm font-medium mb-2 text-gray-700"
                   >
                     Origem
                   </label>
@@ -118,7 +118,7 @@ export default function InvestmentForm() {
                     name="origin"
                     onChange={handleChange}
                     value={investmentFormData.origin}
-                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                     placeholder="Ex: Banco A"
                     required
                   />
@@ -126,7 +126,7 @@ export default function InvestmentForm() {
                 <div className="mb-3">
                   <label
                     htmlFor="category"
-                    className="block text-sm font-medium mb-2 dark:text-white"
+                    className="block text-sm font-medium mb-2 text-gray-700"
                   >
                     Categoria
                   </label>
@@ -136,7 +136,7 @@ export default function InvestmentForm() {
                     name="category"
                     onChange={handleChange}
                     value={investmentFormData.category}
-                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                     placeholder="Ex: Renda Fixa, Ações, FII"
                     required
                   />
@@ -144,7 +144,7 @@ export default function InvestmentForm() {
                 <div className="mb-3">
                   <label
                     htmlFor="interest"
-                    className="block text-sm font-medium mb-2 dark:text-white"
+                    className="block text-sm font-medium mb-2 text-gray-700"
                   >
                     Taxa
                   </label>
@@ -154,9 +154,9 @@ export default function InvestmentForm() {
                     name="interest"
                     onChange={handleChange}
                     value={investmentFormData.interest}
-                    className={`py-3 px-4 block w-full border rounded-md text-sm focus:ring-blue-500 dark:bg-slate-900 dark:text-gray-400 ${taxaError
-                      ? 'border-red-500 focus:border-red-500 dark:border-red-500'
-                      : 'border-gray-200 focus:border-blue-500 dark:border-gray-700'
+                    className={`py-3 px-4 block w-full border rounded-md text-sm focus:ring-blue-500 ${taxaError
+                      ? 'border-red-500 focus:border-red-500'
+                      : 'border-gray-200 focus:border-blue-500'
                       }`}
                     placeholder="Ex: 100% CDI, 10%, IPCA + 5%"
                   />
@@ -167,7 +167,7 @@ export default function InvestmentForm() {
                 <div className="mb-3">
                   <label
                     htmlFor="created_at"
-                    className="block text-sm font-medium mb-2 dark:text-white"
+                    className="block text-sm font-medium mb-2 text-gray-700"
                   >
                     Data
                   </label>
@@ -177,14 +177,14 @@ export default function InvestmentForm() {
                     name="created_at"
                     onChange={handleChange}
                     value={investmentFormData.created_at}
-                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                     required
                   />
                 </div>
                 <div>
                   <button
                     type="submit"
-                    className="py-3 px-4 inline-flex w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-gray-500 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all text-sm dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-offset-gray-800"
+                    className="py-3 px-4 inline-flex w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-gray-500 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all text-sm"
                   >
                     Enviar
                   </button>

@@ -16,14 +16,14 @@ export default function Modal() {
             className="fixed h-full w-full right-0 top-0 bg-black/50 z-10"
             onClick={() => toggleShowModal()}
           ></div>
-          <div className="fixed top-1/3 left-1/2 -translate-x-1/2 z-[60] overflow-x-hidden overflow-y-auto sm:max-w-lg sm:w-full sm:mx-auto flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-            <div className="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
-              <h3 className="font-bold text-gray-800 dark:text-white">
+          <div className="fixed top-1/3 left-1/2 -translate-x-1/2 z-[60] overflow-x-hidden overflow-y-auto sm:max-w-lg sm:w-full sm:mx-auto flex flex-col bg-white border shadow-sm rounded-xl">
+            <div className="flex justify-between items-center py-3 px-4 border-b ">
+              <h3 className="font-bold text-gray-800 ">
                 Remover Investimento
               </h3>
               <button
                 type="button"
-                className="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded-md text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800"
+                className="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded-md text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm "
                 onClick={toggleShowModal}
               >
                 <span className="sr-only">Close</span>
@@ -43,7 +43,7 @@ export default function Modal() {
               </button>
             </div>
             <div className="p-4 overflow-y-auto">
-              <p className="mt-1 text-gray-800 dark:text-gray-400">
+              <p className="mt-1 text-gray-800">
                 Deseja remover o investimento{' '}
                 <span className="investment-name font-semibold">
                   {' '}
@@ -52,17 +52,17 @@ export default function Modal() {
                 ?
               </p>
             </div>
-            <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
+            <div className="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
               <button
                 type="button"
-                className="hs-dropdown-toggle py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+                className="hs-dropdown-toggle py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm"
                 onClick={toggleShowModal}
               >
                 Cancelar
               </button>
               <button
                 type="button"
-                className="remove-investment-btn py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                className="remove-investment-btn py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm"
                 onClick={handleDeleteInvestment}
               >
                 Confirmar
