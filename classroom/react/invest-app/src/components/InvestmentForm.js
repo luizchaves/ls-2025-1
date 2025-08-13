@@ -1,4 +1,5 @@
 import { useInvestment } from '@/contexts/InvestmentContext';
+import { useState } from 'react';
 
 export default function InvestmentForm() {
   const {
@@ -9,8 +10,20 @@ export default function InvestmentForm() {
     handleFormSubmit,
   } = useInvestment();
 
+  const [taxaError, setTaxaError] = useState('');
+  const taxaRegex = /^$|^\d+(\.\d+)?%(\s*(Selic|CDI))?$|^IPCA\s*\+\s*\d+(\.\d+)?%$/i;
+
   const handleChange = (event) => {
     let { name, value } = event.target;
+
+    if (name === 'interest') {
+      const isValid = taxaRegex.test(value);
+      if (!isValid && value !== '') {
+        setTaxaError('Formato inválido. Use: 10%, 100% CDI, 100% Selic ou IPCA + 5%');
+      } else {
+        setTaxaError('');
+      }
+    }
 
     setInvestmentFormData({ ...investmentFormData, [name]: value });
   };
@@ -69,7 +82,8 @@ export default function InvestmentForm() {
                     onChange={handleChange}
                     value={investmentFormData.name}
                     className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                    required=""
+                    placeholder="Ex: Tesouro Selic 2030"
+                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -83,10 +97,12 @@ export default function InvestmentForm() {
                     type="number"
                     id="value"
                     name="value"
+                    step={0.01}
                     onChange={handleChange}
                     value={investmentFormData.value}
                     className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                    required=""
+                    placeholder="Ex: 1000.00"
+                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -103,7 +119,8 @@ export default function InvestmentForm() {
                     onChange={handleChange}
                     value={investmentFormData.origin}
                     className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                    required=""
+                    placeholder="Ex: Banco A"
+                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -120,7 +137,8 @@ export default function InvestmentForm() {
                     onChange={handleChange}
                     value={investmentFormData.category}
                     className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                    required=""
+                    placeholder="Ex: Renda Fixa, Ações, FII"
+                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -136,9 +154,15 @@ export default function InvestmentForm() {
                     name="interest"
                     onChange={handleChange}
                     value={investmentFormData.interest}
-                    className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                    required=""
+                    className={`py-3 px-4 block w-full border rounded-md text-sm focus:ring-blue-500 dark:bg-slate-900 dark:text-gray-400 ${taxaError
+                      ? 'border-red-500 focus:border-red-500 dark:border-red-500'
+                      : 'border-gray-200 focus:border-blue-500 dark:border-gray-700'
+                      }`}
+                    placeholder="Ex: 100% CDI, 10%, IPCA + 5%"
                   />
+                  {taxaError && (
+                    <p className="text-red-500 text-xs mt-1">{taxaError}</p>
+                  )}
                 </div>
                 <div className="mb-3">
                   <label
@@ -154,7 +178,7 @@ export default function InvestmentForm() {
                     onChange={handleChange}
                     value={investmentFormData.created_at}
                     className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                    required=""
+                    required
                   />
                 </div>
                 <div>
