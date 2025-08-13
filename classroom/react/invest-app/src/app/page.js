@@ -10,6 +10,7 @@ export default function Home() {
   const {
     investments,
     loadInvestments,
+    isLoading,
     isShowValues,
     toggleShowValues,
     handleCreateInvestment,
@@ -29,9 +30,20 @@ export default function Home() {
       </header>
 
       <div className="investments grid grid-cols-3 gap-3">
-        {investments.map((investment) => (
-          <InvestmentCard {...investment} key={investment.id} />
-        ))}
+        {isLoading ? (
+          <div className="col-span-3 flex flex-col justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mb-4"></div>
+            <div className="text-gray-500 text-lg">Carregando investimentos...</div>
+          </div>
+        ) : investments.length === 0 ? (
+          <div className="col-span-3 flex justify-center items-center py-12">
+            <div className="text-gray-500 text-lg">Nenhum investimento encontrado</div>
+          </div>
+        ) : (
+          investments.map((investment) => (
+            <InvestmentCard {...investment} key={investment.id} />
+          ))
+        )}
       </div>
 
       <div className="fixed bottom-8 right-8">

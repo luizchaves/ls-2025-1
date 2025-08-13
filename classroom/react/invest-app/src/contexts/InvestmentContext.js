@@ -20,6 +20,8 @@ export function InvestmentProvider({ children }) {
 
   const [investments, setInvestments] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [isShowValues, setIsShowValues] = useState(true);
 
   const [isShowModal, setIsShowModal] = useState(false);
@@ -47,9 +49,16 @@ export function InvestmentProvider({ children }) {
   };
 
   const loadInvestments = async () => {
-    const investments = await Storage.read('investments');
+    setIsLoading(true);
 
-    setInvestments(investments);
+    try {
+      const investments = await Storage.read('investments');
+      setInvestments(investments);
+    } catch (error) {
+      console.error('Erro ao carregar investimentos:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const createInvestment = async (investment) => {
@@ -147,6 +156,7 @@ export function InvestmentProvider({ children }) {
         investmentFormData,
         investmentModalData,
         investments,
+        isLoading,
         isShowInvestmentForm,
         isShowModal,
         isShowValues,
