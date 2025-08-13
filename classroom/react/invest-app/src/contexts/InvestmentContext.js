@@ -48,12 +48,29 @@ export function InvestmentProvider({ children }) {
     setIsShowInvestmentForm(!isShowInvestmentForm);
   };
 
+  const getTotalValue = () => {
+    const total = investments.reduce((total, investment) => {
+      return total + Number(investment.value * 100 || 0);
+    }, 0);
+
+    return total / 100;
+  };
+
+  const sortInvestmentsByDate = (investments) => {
+    return investments.sort((a, b) => {
+      const dateA = new Date(a.created_at);
+      const dateB = new Date(b.created_at);
+      return dateB - dateA; // Ordem decrescente (mais novo primeiro)
+    });
+  };
+
   const loadInvestments = async () => {
     setIsLoading(true);
 
     try {
       const investments = await Storage.read('investments');
-      setInvestments(investments);
+      const sortedInvestments = sortInvestmentsByDate(investments);
+      setInvestments(sortedInvestments);
     } catch (error) {
       console.error('Erro ao carregar investimentos:', error);
     } finally {
@@ -63,8 +80,9 @@ export function InvestmentProvider({ children }) {
 
   const createInvestment = async (investment) => {
     const newInvestment = await Storage.create('investments', investment);
-
-    setInvestments([...investments, newInvestment]);
+    const updatedInvestments = [...investments, newInvestment];
+    const sortedInvestments = sortInvestmentsByDate(updatedInvestments);
+    setInvestments(sortedInvestments);
   };
 
   const updateInvestment = async (investment) => {
@@ -72,7 +90,9 @@ export function InvestmentProvider({ children }) {
       (item) => item.id !== investment.id
     );
 
-    setInvestments([...newInvestments, investment]);
+    const updatedInvestments = [...newInvestments, investment];
+    const sortedInvestments = sortInvestmentsByDate(updatedInvestments);
+    setInvestments(sortedInvestments);
 
     Storage.update('investments', investment);
   };
@@ -147,6 +167,7 @@ export function InvestmentProvider({ children }) {
     <InvestmentContext.Provider
       value={{
         createInvestment,
+        getTotalValue,
         handleCreateInvestment,
         handleDeleteInvestment,
         handleFormSubmit,

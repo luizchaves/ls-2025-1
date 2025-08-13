@@ -1,6 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 import { useInvestment } from '@/contexts/InvestmentContext';
+import { formatCurrency } from '@/lib/format';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
 import InvestmentCard from '@/components/InvestmentCard';
 import InvestmentForm from '@/components/InvestmentForm';
@@ -12,6 +13,7 @@ export default function Home() {
     loadInvestments,
     isLoading,
     isShowValues,
+    getTotalValue,
     toggleShowValues,
     handleCreateInvestment,
   } = useInvestment();
@@ -28,6 +30,23 @@ export default function Home() {
         </div>
         <h1 className="text-center text-2xl font-bold">Investimentos</h1>
       </header>
+
+      <div className="mb-8 p-6 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-gray-200">
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-lg font-semibold text-gray-700 mb-1">Valor Total dos Investimentos</h2>
+            <p className="text-3xl font-bold text-green-600">
+              {isShowValues ? formatCurrency(getTotalValue() / 100) : '••••••'}
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="text-sm text-gray-500 mb-1">Total de investimentos</p>
+            <p className="text-xl font-semibold text-gray-700">
+              {investments.length}
+            </p>
+          </div>
+        </div>
+      </div>
 
       <div className="investments grid grid-cols-3 gap-3">
         {isLoading ? (
