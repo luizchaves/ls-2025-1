@@ -13,22 +13,31 @@ export default function InvestmentForm() {
   } = useInvestmentsPage();
 
   const [taxaError, setTaxaError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const taxaRegex = /^$|^\d+(\.\d+)?%(\s*(Selic|CDI))?$|^IPCA\s*\+\s*\d+(\.\d+)?%$/i;
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    investmentFormData.value = Number(investmentFormData.value) * 100;
+    setIsLoading(true);
 
-    investmentFormData.created_at = new Date(
-      investmentFormData.created_at + 'T00:00:00-03:00'
-    ).toISOString();
+    try {
+      investmentFormData.value = Number(investmentFormData.value) * 100;
 
-    investmentFormAction === 'create'
-      ? createInvestment(investmentFormData)
-      : updateInvestment(investmentFormData);
+      investmentFormData.created_at = new Date(
+        investmentFormData.created_at + 'T00:00:00-03:00'
+      ).toISOString();
 
-    toggleShowInvestmentForm();
+      investmentFormAction === 'create'
+        ? await createInvestment(investmentFormData)
+        : await updateInvestment(investmentFormData);
+
+      toggleShowInvestmentForm();
+    } catch (error) {
+      console.error('Erro ao salvar investimento:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (event) => {
@@ -202,9 +211,20 @@ export default function InvestmentForm() {
                 <div>
                   <button
                     type="submit"
-                    className="py-3 px-4 inline-flex w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-gray-500 text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all text-sm"
+                    disabled={isLoading}
+                    className={`py-3 px-4 inline-flex w-full justify-center items-center gap-2 rounded-md border border-transparent font-semibold text-white focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all text-sm ${isLoading
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-gray-500 hover:bg-gray-600 focus:ring-gray-500'
+                      }`}
                   >
-                    Enviar
+                    {isLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full size-4 border-b-2 border-white mr-2"></div>
+                        Salvando...
+                      </>
+                    ) : (
+                      'Enviar'
+                    )}
                   </button>
                 </div>
               </form>

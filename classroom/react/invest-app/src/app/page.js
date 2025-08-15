@@ -75,8 +75,8 @@ function Page() {
 
       <div className="investments grid grid-cols-3 gap-3">
         {isLoadingPage ? (
-          <div className="col-span-3 flex flex-col justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mb-4"></div>
+          <div className="col-span-3 flex justify-center items-center gap-4 py-12">
+            <div className="animate-spin rounded-full size-4 border-b-2 border-gray-900 mb-4"></div>
             <div className="text-gray-500 text-lg">Carregando investimentos...</div>
           </div>
         ) : investments.length === 0 ? (
