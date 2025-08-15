@@ -1,7 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from 'next/link';
 import "./globals.css";
-import { InvestmentProvider } from '@/contexts/InvestmentContext';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,9 +33,7 @@ export default function RootLayout({ children }) {
           </div>
         </nav>
         <div className="container min-h-screen mx-auto lg:max-w-screen-lg">
-          <InvestmentProvider>
-            {children}
-          </InvestmentProvider>
+          {children}
         </div>
       </body>
     </html>

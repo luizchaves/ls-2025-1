@@ -1,4 +1,4 @@
-import { useInvestment } from '@/contexts/InvestmentContext';
+import { useInvestmentsPage } from '@/contexts/InvestmentsPageContext';
 import { useState } from 'react';
 
 export default function InvestmentForm() {
@@ -7,11 +7,29 @@ export default function InvestmentForm() {
     toggleShowInvestmentForm,
     investmentFormData,
     setInvestmentFormData,
-    handleFormSubmit,
-  } = useInvestment();
+    investmentFormAction,
+    createInvestment,
+    updateInvestment,
+  } = useInvestmentsPage();
 
   const [taxaError, setTaxaError] = useState('');
   const taxaRegex = /^$|^\d+(\.\d+)?%(\s*(Selic|CDI))?$|^IPCA\s*\+\s*\d+(\.\d+)?%$/i;
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    investmentFormData.value = Number(investmentFormData.value) * 100;
+
+    investmentFormData.created_at = new Date(
+      investmentFormData.created_at + 'T00:00:00-03:00'
+    ).toISOString();
+
+    investmentFormAction === 'create'
+      ? createInvestment(investmentFormData)
+      : updateInvestment(investmentFormData);
+
+    toggleShowInvestmentForm();
+  };
 
   const handleChange = (event) => {
     let { name, value } = event.target;

@@ -1,22 +1,47 @@
 'use client';
 import { useEffect } from 'react';
-import { useInvestment } from '@/contexts/InvestmentContext';
+import { useInvestmentsPage, InvestmentsPageProvider } from '@/contexts/InvestmentsPageContext';
 import { formatCurrency } from '@/lib/format';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
 import InvestmentCard from '@/components/InvestmentCard';
 import InvestmentForm from '@/components/InvestmentForm';
-import Modal from '@/components/Modal';
+import DeleteInvestmentModal from '@/components/DeleteInvestmentModal';
 
-export default function Home() {
+export default function InvestmentsPage() {
+  return (
+    <InvestmentsPageProvider>
+      <Page />
+    </InvestmentsPageProvider>
+  );
+}
+
+function Page() {
   const {
     investments,
     loadInvestments,
-    isLoading,
+    isLoadingPage,
     isShowValues,
-    getTotalValue,
     toggleShowValues,
-    handleCreateInvestment,
-  } = useInvestment();
+    resetInvestmentFormData,
+    setInvestmentFormAction,
+    toggleShowInvestmentForm,
+  } = useInvestmentsPage();
+
+  const getTotalValue = () => {
+    const total = investments.reduce((total, investment) => {
+      return total + Number(investment.value * 100 || 0);
+    }, 0);
+
+    return total / 100;
+  };
+
+  const handleCreateInvestment = async () => {
+    resetInvestmentFormData();
+
+    setInvestmentFormAction('create');
+
+    toggleShowInvestmentForm();
+  };
 
   useEffect(() => {
     loadInvestments();
@@ -31,25 +56,25 @@ export default function Home() {
         <h1 className="text-center text-2xl font-bold">Investimentos</h1>
       </header>
 
-      <div className="mb-8 p-6 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-gray-200">
+      {/* <div className="mb-8 p-6 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-gray-200">
         <div className="flex justify-between items-center">
           <div>
             <h2 className="text-lg font-semibold text-gray-700 mb-1">Valor Total dos Investimentos</h2>
             <p className="text-3xl font-bold text-green-600">
-              {isShowValues ? formatCurrency(getTotalValue() / 100) : '••••••'}
+              {isShowValues ? formatCurrency(getTotalValue() / 100) : '*****'}
             </p>
           </div>
           <div className="text-right">
             <p className="text-sm text-gray-500 mb-1">Total de investimentos</p>
             <p className="text-xl font-semibold text-gray-700">
-              {investments.length}
+              {isShowValues ? investments.length : '**'}
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="investments grid grid-cols-3 gap-3">
-        {isLoading ? (
+        {isLoadingPage ? (
           <div className="col-span-3 flex flex-col justify-center items-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mb-4"></div>
             <div className="text-gray-500 text-lg">Carregando investimentos...</div>
@@ -60,7 +85,7 @@ export default function Home() {
           </div>
         ) : (
           investments.map((investment) => (
-            <InvestmentCard {...investment} key={investment.id} />
+            <InvestmentCard investment={investment} key={investment.id} />
           ))
         )}
       </div>
@@ -77,7 +102,7 @@ export default function Home() {
 
       <InvestmentForm />
 
-      <Modal />
+      <DeleteInvestmentModal />
     </>
   );
 }

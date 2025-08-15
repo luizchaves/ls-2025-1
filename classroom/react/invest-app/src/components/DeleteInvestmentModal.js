@@ -1,12 +1,18 @@
-import { useInvestment } from '@/contexts/InvestmentContext';
+import { useInvestmentsPage } from '@/contexts/InvestmentsPageContext';
 
-export default function Modal() {
+export default function DeleteInvestmentModal() {
   const {
     isShowModal,
     toggleShowModal,
-    handleDeleteInvestment,
     investmentModalData,
-  } = useInvestment();
+    removeInvestment,
+  } = useInvestmentsPage();
+
+  const handleDeleteInvestment = (id) => {
+    removeInvestment(id);
+
+    toggleShowModal();
+  };
 
   return (
     <>
@@ -63,7 +69,7 @@ export default function Modal() {
               <button
                 type="button"
                 className="remove-investment-btn py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm"
-                onClick={handleDeleteInvestment}
+                onClick={() => handleDeleteInvestment(investmentModalData.id)}
               >
                 Confirmar
               </button>
