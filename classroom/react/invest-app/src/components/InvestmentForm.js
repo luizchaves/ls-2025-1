@@ -1,5 +1,5 @@
 import { useInvestmentsPage } from '@/contexts/InvestmentsPageContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { formatCurrency, parseCurrencyToNumber } from '@/lib/format';
 
 export default function InvestmentForm() {
@@ -17,6 +17,19 @@ export default function InvestmentForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [displayValue, setDisplayValue] = useState('');
   const taxaRegex = /^$|^\d+(\.\d+)?%(\s*(Selic|CDI))?$|^IPCA\s*\+\s*\d+(\.\d+)?%$/i;
+
+  useEffect(() => {
+    if (!isShowInvestmentForm && investmentFormAction === 'create') {
+      setDisplayValue('');
+    }
+  }, [isShowInvestmentForm]);
+
+  useEffect(() => {
+    if (investmentFormData.value && investmentFormAction === 'update') {
+      const valueInReais = investmentFormData.value / 100;
+      setDisplayValue(formatCurrency(valueInReais));
+    }
+  }, [investmentFormData.value, investmentFormAction]);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
