@@ -1,7 +1,6 @@
 'use client';
 import { useEffect } from 'react';
 import { useInvestmentsPage, InvestmentsPageProvider } from '@/contexts/InvestmentsPageContext';
-import { formatCurrency } from '@/lib/format';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
 import InvestmentCard from '@/components/InvestmentCard';
 import InvestmentForm from '@/components/InvestmentForm';

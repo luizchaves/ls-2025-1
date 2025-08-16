@@ -5,6 +5,17 @@ export function formatCurrency(value) {
   }).format(value);
 }
 
+export function parseCurrencyToNumber(currencyString) {
+  if (!currencyString) return 0;
+
+  return parseFloat(
+    currencyString
+      .replace(/[R$\s]/g, '')
+      .replace(/\./g, '')
+      .replace(',', '.')
+  ) || 0;
+}
+
 export function formatDate(date) {
   return new Intl.DateTimeFormat('pt-BR', {
     year: 'numeric',

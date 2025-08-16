@@ -1,5 +1,6 @@
 import { useInvestmentsPage } from '@/contexts/InvestmentsPageContext';
 import { useState } from 'react';
+import { formatCurrency, parseCurrencyToNumber } from '@/lib/format';
 
 export default function InvestmentForm() {
   const {
@@ -14,6 +15,7 @@ export default function InvestmentForm() {
 
   const [taxaError, setTaxaError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [displayValue, setDisplayValue] = useState('');
   const taxaRegex = /^$|^\d+(\.\d+)?%(\s*(Selic|CDI))?$|^IPCA\s*\+\s*\d+(\.\d+)?%$/i;
 
   const handleFormSubmit = async (event) => {
@@ -22,7 +24,8 @@ export default function InvestmentForm() {
     setIsLoading(true);
 
     try {
-      investmentFormData.value = Number(investmentFormData.value) * 100;
+      const numericValue = parseCurrencyToNumber(displayValue);
+      investmentFormData.value = numericValue * 100;
 
       investmentFormData.created_at = new Date(
         investmentFormData.created_at + 'T00:00:00-03:00'
@@ -42,6 +45,13 @@ export default function InvestmentForm() {
 
   const handleChange = (event) => {
     let { name, value } = event.target;
+
+    if (name === 'value') {
+      const numericValue = value.replace(/\D/g, '');
+      const formattedValue = formatCurrency(numericValue / 100);
+      setDisplayValue(formattedValue);
+      value = parseCurrencyToNumber(formattedValue);
+    }
 
     if (name === 'interest') {
       const isValid = taxaRegex.test(value);
@@ -121,14 +131,13 @@ export default function InvestmentForm() {
                     Valor
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     id="value"
                     name="value"
-                    step={0.01}
                     onChange={handleChange}
-                    value={investmentFormData.value}
+                    value={displayValue}
                     className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
-                    placeholder="Ex: 1000.00"
+                    placeholder="Ex: R$ 1.000,00"
                     required
                   />
                 </div>
