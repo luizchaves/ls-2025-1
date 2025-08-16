@@ -1,11 +1,13 @@
+import { useInvestmentsData } from '@/contexts/InvestmentsDataContext';
 import { useInvestmentsPage } from '@/contexts/InvestmentsPageContext';
 
 export default function DeleteInvestmentModal() {
+  const { removeInvestment } = useInvestmentsData();
+
   const {
     isShowModal,
     toggleShowModal,
     investmentModalData,
-    removeInvestment,
   } = useInvestmentsPage();
 
   const handleDeleteInvestment = (id) => {

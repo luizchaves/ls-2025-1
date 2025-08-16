@@ -1,27 +1,14 @@
 'use client';
-import { useEffect, useMemo } from 'react';
+import { useInvestmentsData } from '@/contexts/InvestmentsDataContext';
 import { useInvestmentsPage, InvestmentsPageProvider } from '@/contexts/InvestmentsPageContext';
-import { IconEye, IconEyeOff } from '@tabler/icons-react';
 import InvestmentCard from '@/components/InvestmentCard';
 import InvestmentForm from '@/components/InvestmentForm';
 import DeleteInvestmentModal from '@/components/DeleteInvestmentModal';
-import { formatCurrency } from '@/lib/format';
 
-export default function InvestmentsPage() {
-  return (
-    <InvestmentsPageProvider>
-      <Page />
-    </InvestmentsPageProvider>
-  );
-}
+function InvestmentsPageContent() {
+  const { investments, isLoadingData: isLoadingPage } = useInvestmentsData();
 
-function Page() {
   const {
-    investments,
-    loadInvestments,
-    isLoadingPage,
-    isShowValues,
-    toggleShowValues,
     resetInvestmentFormData,
     setInvestmentFormAction,
     toggleShowInvestmentForm,
@@ -35,21 +22,8 @@ function Page() {
     toggleShowInvestmentForm();
   };
 
-  useEffect(() => {
-    loadInvestments();
-  }, []);
-
   return (
     <>
-      <header className="py-12">
-        <div className="flex justify-end">
-          <div onClick={toggleShowValues} className="cursor-pointer">
-            {isShowValues ? <IconEye size={24} /> : <IconEyeOff size={24} />}
-          </div>
-        </div>
-        <h1 className="text-center text-2xl font-bold mt-4">Meus Investimentos</h1>
-      </header>
-
       <div className="investments grid grid-cols-3 gap-3">
         {isLoadingPage ? (
           <div className="col-span-3 flex justify-center items-center gap-4 py-12">
@@ -81,5 +55,13 @@ function Page() {
 
       <DeleteInvestmentModal />
     </>
+  );
+}
+
+export default function InvestmentsPage() {
+  return (
+    <InvestmentsPageProvider>
+      <InvestmentsPageContent />
+    </InvestmentsPageProvider>
   );
 }

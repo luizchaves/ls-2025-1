@@ -26,13 +26,13 @@ export default function RootLayout({ children }) {
       >
         <nav className="bg-white shadow mb-6">
           <div className="container mx-auto px-4 py-3 flex justify-between items-center lg:max-w-screen-lg">
-            <span className="font-bold text-xl text-gray-800">Invest App</span>
+            <Link href="/" className="font-bold text-xl text-gray-800">Invest App</Link>
             <div className="flex space-x-6">
-              <Link href="/" className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors">
+              <Link href="/asset" className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors">
                 <IconChartBar size={20} />
                 <span>Estatísticas</span>
               </Link>
-              <Link href="/investments" className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors">
+              <Link href="/asset/allocation" className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors">
                 <IconPigMoney size={20} />
                 <span>Investimentos</span>
               </Link>

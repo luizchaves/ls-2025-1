@@ -1,16 +1,17 @@
+import { useInvestmentsData } from '@/contexts/InvestmentsDataContext';
 import { useInvestmentsPage } from '@/contexts/InvestmentsPageContext';
 import { useState, useEffect } from 'react';
 import { formatCurrency, parseCurrencyToNumber } from '@/lib/format';
 
 export default function InvestmentForm() {
+  const { createInvestment, updateInvestment } = useInvestmentsData();
+
   const {
     isShowInvestmentForm,
     toggleShowInvestmentForm,
     investmentFormData,
     setInvestmentFormData,
     investmentFormAction,
-    createInvestment,
-    updateInvestment,
   } = useInvestmentsPage();
 
   const [taxaError, setTaxaError] = useState('');
@@ -30,6 +31,15 @@ export default function InvestmentForm() {
       setDisplayValue(formatCurrency(valueInReais));
     }
   }, [investmentFormData.value, investmentFormAction]);
+
+  useEffect(() => {
+    if (investmentFormData.created_at && investmentFormAction === 'update') {
+      setInvestmentFormData({
+        ...investmentFormData,
+        created_at: investmentFormData.created_at.split('T')[0],
+      });
+    }
+  }, [investmentFormData.created_at, investmentFormAction]);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -225,7 +235,7 @@ export default function InvestmentForm() {
                     id="created_at"
                     name="created_at"
                     onChange={handleChange}
-                    value={investmentFormData.created_at}
+                    value={investmentFormData.created_at ? investmentFormData.created_at.split('T')[0] : ''}
                     className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
                     required
                   />

@@ -3,13 +3,15 @@
 import Link from 'next/link';
 import { IconTrash, IconPencil } from '@tabler/icons-react';
 import { formatCurrency, formatDate } from '@/lib/format';
+import { useInvestmentsData } from '@/contexts/InvestmentsDataContext';
 import { useInvestmentsPage } from '@/contexts/InvestmentsPageContext';
 
 export default function InvestmentCard({
   investment
 }) {
+  const { isShowValues } = useInvestmentsData();
+
   const {
-    isShowValues,
     setInvestmentModalData,
     toggleShowModal,
     setInvestmentFormAction,
