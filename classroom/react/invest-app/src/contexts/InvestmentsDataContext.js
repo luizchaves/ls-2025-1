@@ -2,6 +2,7 @@
 
 import { createContext, useState, useContext, useEffect } from 'react';
 import Storage from '@/storage/storage-fetch';
+import { supabase } from '@/storage/storage-supabase-client';
 // import Storage from '@/storage/storage-axios';
 // import Storage from '@/storage/storage-supabase-client';
 
@@ -9,6 +10,7 @@ export const InvestmentsDataContext = createContext({});
 
 export function InvestmentsDataProvider({ children }) {
   const [investments, setInvestments] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const [isShowValues, setIsShowValues] = useState(true);
 
@@ -20,17 +22,20 @@ export function InvestmentsDataProvider({ children }) {
     return investments.sort((a, b) => {
       const dateA = new Date(a.created_at);
       const dateB = new Date(b.created_at);
-      return dateB - dateA; // Ordem decrescente (mais novo primeiro)
+      return dateB - dateA;
     });
   };
 
-  const loadInvestments = async () => {
+  const loadData = async () => {
     setIsLoadingData(true);
 
     try {
       const investments = await Storage.read('investments');
       const sortedInvestments = sortInvestmentsByDate(investments);
       setInvestments(sortedInvestments);
+
+      let { data: categories } = await supabase.rpc("get_enum_values", { enum_name: "category" });
+      setCategories(Object.values(categories));
     } catch (error) {
       console.error('Erro ao carregar investimentos:', error);
     } finally {
@@ -66,16 +71,16 @@ export function InvestmentsDataProvider({ children }) {
   };
 
   useEffect(() => {
-    loadInvestments();
+    loadData();
   }, []);
 
   return (
     <InvestmentsDataContext.Provider
       value={{
         investments,
+        categories,
         isLoadingData,
         isShowValues,
-        loadInvestments,
         createInvestment,
         updateInvestment,
         removeInvestment,

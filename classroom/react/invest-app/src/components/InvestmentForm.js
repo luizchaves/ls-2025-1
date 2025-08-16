@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { formatCurrency, parseCurrencyToNumber } from '@/lib/format';
 
 export default function InvestmentForm() {
-  const { createInvestment, updateInvestment } = useInvestmentsData();
+  const { createInvestment, updateInvestment, categories } = useInvestmentsData();
 
   const {
     isShowInvestmentForm,
@@ -189,16 +189,20 @@ export default function InvestmentForm() {
                   >
                     Categoria
                   </label>
-                  <input
-                    type="text"
+                  <select
                     id="category"
                     name="category"
                     onChange={handleChange}
                     value={investmentFormData.category}
                     className="py-3 px-4 block w-full border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500"
-                    placeholder="Ex: Renda Fixa, Ações, FII"
                     required
-                  />
+                  >
+                    {categories.map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="mb-3">
                   <label
